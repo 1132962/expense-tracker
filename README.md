@@ -1,50 +1,66 @@
 
-# Expense Tracker
+# Expense Tracker 支出記帳系統
 
-A Python expense tracking application developed for Introduction to Software Engineering - Assignment 1.
+## 一、專案介紹
 
-This project supports expense entry, CSV storage, and category-based pie chart visualization.
+本專案為「軟體工程導論 Assignment 1：Version Control Practice」。
 
-## Team Members
+使用 Python 開發簡易支出記帳系統，提供支出輸入、CSV 資料儲存及分類圓餅圖視覺化功能。
 
-| Member | Responsibility | Git Branch |
+本專案由兩位組員共同完成，使用 Git 進行版本控制，並透過 GitHub 進行分支開發與程式整合。
+
+## 二、組員分工
+
+| 成員 | 負責內容 | Git 分支 |
 |---|---|---|
-| Member A | Expense Input and CSV Storage | feature-input |
-| Member B | Expense Visualization | feature-piechart |
+| Member A | 支出輸入、資料驗證、CSV 儲存、自動呼叫繪圖功能 | feature-input |
+| Member B | 讀取 CSV、資料統計、分類圓餅圖產生 | feature-piechart |
 
-## Features
+## 三、系統功能
 
-- Add multiple expenses with date, amount, category, and optional notes.
-- Validate date and amount inputs.
-- Save expense records to expenses.csv.
-- Handle missing line breaks when appending CSV records.
-- Calculate total spending by category.
-- Generate a pie chart showing category percentages.
-- Automatically regenerate the pie chart after adding an expense.
+### Member A：支出輸入與儲存
 
-## Installation
+1. 輸入支出日期、金額、類別與備註。
+2. 支援連續新增多筆支出紀錄。
+3. 驗證日期格式及金額是否有效。
+4. 將資料儲存至 expenses.csv。
+5. 自動檢查並處理 CSV 檔案結尾缺少換行的情況。
+6. 儲存完成後，自動執行圓餅圖產生程式。
 
-Requirements:
+### Member B：支出視覺化
+
+1. 讀取 expenses.csv。
+2. 按照支出類別統計總金額。
+3. 計算各類別占總支出的百分比。
+4. 產生分類支出圓餅圖。
+5. 顯示總支出金額及各類別占比。
+6. 支援自訂 CSV 輸入路徑與 PNG 輸出路徑。
+7. 檢查 CSV 欄位、金額及類別資料是否有效。
+
+## 四、執行環境與安裝
+
+### 系統需求
+
 - Python 3
 - matplotlib
 
-Install dependencies:
+### 安裝套件
 
-```bash
+開啟終端機，切換至專案資料夾後，執行：
+
+```powershell
 python -m pip install -r requirements.txt
 ```
 
-## How to Run
+## 五、使用方式
 
-### 1. Add Expenses
+### 1. 執行支出輸入程式
 
-Run:
-
-```bash
+```powershell
 python input_expense.py
 ```
 
-The program displays:
+執行後會顯示：
 
 ```text
 Expense Tracker
@@ -53,9 +69,9 @@ Expense Tracker
 Choose an option:
 ```
 
-Select 1 to add an expense.
+輸入 1 新增支出。
 
-Example:
+範例：
 
 ```text
 Date (YYYY-MM-DD): 2026-11-21
@@ -64,38 +80,57 @@ Category: food
 Notes (optional): lunch
 ```
 
-The expense is saved to expenses.csv.
+完成後，程式會將資料儲存至 expenses.csv。
 
-After saving, the program automatically runs visualize.py to update pie_chart.png if the visualization module is available.
+若已安裝所需套件，且 visualize.py 存在，則會自動執行繪圖程式，更新 pie_chart.png。
 
-Select 1 to add another expense or 2 to exit.
+可以再次選擇 1 新增支出，或選擇 2 結束程式。
 
-### 2. Generate Pie Chart
+### 2. 獨立執行圓餅圖程式
 
-The visualization module can also be executed separately:
-
-```bash
+```powershell
 python visualize.py
 ```
 
-The program reads expenses.csv and generates pie_chart.png.
+程式會讀取 expenses.csv，依照支出類別統計金額並產生 pie_chart.png。
 
-Custom input and output paths are supported:
+也可以指定輸入及輸出檔案：
 
-```bash
+```powershell
 python visualize.py expenses.csv --output pie_chart.png
 ```
 
-## CSV Data Format
+### 3. 自動更新圓餅圖
 
-Expenses are stored using the following columns:
+執行 input_expense.py 時，每次成功新增支出，程式便會自動呼叫 visualize.py。
 
-- date: Expense date (YYYY-MM-DD)
-- amount: Expense amount
-- category: Expense category
-- notes: Optional description
+執行流程：
 
-Example:
+1. 使用者輸入支出資料。
+2. 系統驗證輸入內容。
+3. 將新資料加入 expenses.csv。
+4. 自動重新統計各類別的支出。
+5. 更新 pie_chart.png。
+6. 返回記帳選單。
+
+使用者不需要每次都手動執行繪圖指令。
+
+注意：圓餅圖會自動儲存為 PNG 檔案，不一定會自動開啟圖片視窗。
+
+## 六、CSV 資料格式
+
+資料儲存於 expenses.csv。
+
+欄位如下：
+
+| 欄位 | 說明 |
+|---|---|
+| date | 支出日期，格式 YYYY-MM-DD |
+| amount | 支出金額 |
+| category | 支出類別 |
+| notes | 備註，可留白 |
+
+範例：
 
 ```csv
 date,amount,category,notes
@@ -103,22 +138,18 @@ date,amount,category,notes
 2026-11-21,80,transport,bus
 ```
 
-## Sample Pie Chart
+## 七、圓餅圖範例
 
-![Sample Expense Pie Chart](sample_pie_chart.png)
+![支出分類圓餅圖](sample_pie_chart.png)
 
-The chart displays total spending and each category's percentage of the total.
+圓餅圖呈現：
 
-## Git Collaboration
+- 支出類別
+- 各類別的支出總金額
+- 各類別占總支出的百分比
+- 所有支出的總金額
 
-This project uses Git and GitHub for version control and teamwork.
-
-- Member A develops the expense input module on feature-input.
-- Member B develops the visualization module on feature-piechart.
-- Both branches are integrated through Git Merge.
-- The GitHub Network Graph records the collaboration and merge history.
-
-## Project Structure
+## 八、專案檔案結構
 
 ```text
 expense-tracker/
@@ -131,4 +162,39 @@ expense-tracker/
 └── sample_pie_chart.png
 ```
 
-The application also generates pie_chart.png when the visualization module runs.
+執行視覺化功能後，會另外產生 pie_chart.png。
+
+## 九、Git 版本控制與團隊合作
+
+本專案使用 Git 和 GitHub 進行雙人協作。
+
+### 分支分工
+
+- main：主分支，存放整合後的專案。
+- feature-input：Member A 負責的輸入與儲存功能。
+- feature-piechart：Member B 負責的視覺化功能。
+
+### 開發流程
+
+1. 建立 GitHub Repository。
+2. 兩位組員建立各自的功能分支。
+3. 分別進行程式開發與測試。
+4. 使用 Git Commit 記錄修改內容。
+5. 使用 Git Push 將變更上傳至 GitHub。
+6. 使用 Git Merge 整合不同分支。
+7. 透過 GitHub Insights → Network 查看分支與合併紀錄。
+
+專案保留兩位組員的 Commit 紀錄及 Merge Commit，以呈現團隊協作過程。
+
+## 十、額外改善功能
+
+除基本記帳及圓餅圖功能外，本專案另提供：
+
+1. 輸入資料驗證。
+2. CSV 換行問題處理。
+3. 新增支出後自動更新圓餅圖。
+4. 圓餅圖顯示金額與百分比。
+5. CSV 資料格式與數值檢查。
+6. 自訂圓餅圖輸入與輸出路徑。
+
+這些功能用於提升程式穩定性、操作便利性及資料視覺化效果。
